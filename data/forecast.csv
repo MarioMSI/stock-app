@@ -1,0 +1,71 @@
+item,category,department,store,region,id,date,sales
+Item1,Clothing,Lifestyle,StoreA,South,Item1StoreA,13/04/2024,50
+Item1,Clothing,Tech,StoreB,South,Item1StoreB,16/04/2024,82
+Item1,Electronics,Lifestyle,StoreC,North,Item1StoreC,17/04/2024,15
+Item1,Electronics,Lifestyle,StoreD,North,Item1StoreD,03/04/2024,49
+Item1,Clothing,Tech,StoreE,South,Item1StoreE,08/04/2024,26
+Item1,Clothing,Lifestyle,StoreF,South,Item1StoreF,16/04/2024,76
+Item1,Clothing,Lifestyle,StoreG,North,Item1StoreG,10/04/2024,91
+Item2,Clothing,Lifestyle,StoreA,South,Item2StoreA,06/04/2024,39
+Item2,Clothing,Lifestyle,StoreB,South,Item2StoreB,19/04/2024,28
+Item2,Home & Garden,Tech,StoreC,North,Item2StoreC,15/04/2024,81
+Item2,Electronics,Tech,StoreD,South,Item2StoreD,19/04/2024,27
+Item2,Electronics,Lifestyle,StoreE,South,Item2StoreE,03/04/2024,94
+Item2,Electronics,Tech,StoreF,North,Item2StoreF,19/04/2024,7
+Item2,Home & Garden,Lifestyle,StoreG,North,Item2StoreG,15/04/2024,21
+Item3,Clothing,Lifestyle,StoreA,North,Item3StoreA,10/04/2024,5
+Item3,Home & Garden,Tech,StoreB,North,Item3StoreB,20/04/2024,71
+Item3,Electronics,Tech,StoreC,South,Item3StoreC,09/04/2024,24
+Item3,Clothing,Tech,StoreD,North,Item3StoreD,05/04/2024,72
+Item3,Electronics,Lifestyle,StoreE,South,Item3StoreE,17/04/2024,28
+Item3,Electronics,Lifestyle,StoreF,North,Item3StoreF,17/04/2024,51
+Item3,Home & Garden,Tech,StoreG,South,Item3StoreG,20/04/2024,12
+Item4,Home & Garden,Lifestyle,StoreA,North,Item4StoreA,20/04/2024,89
+Item4,Electronics,Lifestyle,StoreB,North,Item4StoreB,10/04/2024,51
+Item4,Electronics,Tech,StoreC,South,Item4StoreC,08/04/2024,56
+Item4,Electronics,Tech,StoreD,South,Item4StoreD,13/04/2024,53
+Item4,Home & Garden,Lifestyle,StoreE,North,Item4StoreE,09/04/2024,13
+Item4,Clothing,Lifestyle,StoreF,South,Item4StoreF,13/04/2024,87
+Item4,Home & Garden,Lifestyle,StoreG,North,Item4StoreG,05/04/2024,71
+Item5,Clothing,Lifestyle,StoreA,North,Item5StoreA,08/04/2024,67
+Item5,Clothing,Lifestyle,StoreB,South,Item5StoreB,18/04/2024,34
+Item5,Clothing,Lifestyle,StoreC,North,Item5StoreC,20/04/2024,16
+Item5,Home & Garden,Lifestyle,StoreD,North,Item5StoreD,10/04/2024,67
+Item5,Electronics,Tech,StoreE,North,Item5StoreE,20/04/2024,34
+Item5,Electronics,Tech,StoreF,North,Item5StoreF,11/04/2024,21
+Item5,Electronics,Lifestyle,StoreG,South,Item5StoreG,20/04/2024,29
+Item6,Electronics,Lifestyle,StoreA,South,Item6StoreA,08/04/2024,99
+Item6,Electronics,Tech,StoreB,South,Item6StoreB,04/04/2024,58
+Item6,Electronics,Tech,StoreC,South,Item6StoreC,17/04/2024,73
+Item6,Home & Garden,Lifestyle,StoreD,South,Item6StoreD,11/04/2024,39
+Item6,Home & Garden,Tech,StoreE,North,Item6StoreE,06/04/2024,57
+Item6,Home & Garden,Lifestyle,StoreF,North,Item6StoreF,14/04/2024,59
+Item6,Electronics,Tech,StoreG,South,Item6StoreG,09/04/2024,30
+Item7,Clothing,Tech,StoreA,North,Item7StoreA,09/04/2024,15
+Item7,Electronics,Lifestyle,StoreB,South,Item7StoreB,07/04/2024,56
+Item7,Electronics,Tech,StoreC,South,Item7StoreC,12/04/2024,70
+Item7,Clothing,Lifestyle,StoreD,North,Item7StoreD,17/04/2024,58
+Item7,Clothing,Tech,StoreE,South,Item7StoreE,05/04/2024,41
+Item7,Clothing,Lifestyle,StoreF,North,Item7StoreF,03/04/2024,88
+Item7,Home & Garden,Tech,StoreG,North,Item7StoreG,18/04/2024,58
+Item8,Electronics,Tech,StoreA,South,Item8StoreA,15/04/2024,19
+Item8,Electronics,Tech,StoreB,South,Item8StoreB,19/04/2024,91
+Item8,Electronics,Tech,StoreC,North,Item8StoreC,15/04/2024,38
+Item8,Clothing,Tech,StoreD,South,Item8StoreD,08/04/2024,9
+Item8,Home & Garden,Tech,StoreE,South,Item8StoreE,07/04/2024,40
+Item8,Home & Garden,Tech,StoreF,North,Item8StoreF,18/04/2024,3
+Item8,Electronics,Tech,StoreG,North,Item8StoreG,05/04/2024,25
+Item9,Home & Garden,Tech,StoreA,South,Item9StoreA,04/04/2024,83
+Item9,Home & Garden,Lifestyle,StoreB,North,Item9StoreB,10/04/2024,27
+Item9,Clothing,Lifestyle,StoreC,South,Item9StoreC,04/04/2024,89
+Item9,Electronics,Lifestyle,StoreD,North,Item9StoreD,05/04/2024,23
+Item9,Electronics,Lifestyle,StoreE,South,Item9StoreE,08/04/2024,72
+Item9,Electronics,Tech,StoreF,South,Item9StoreF,14/04/2024,21
+Item9,Electronics,Lifestyle,StoreG,North,Item9StoreG,06/04/2024,67
+Item10,Electronics,Tech,StoreA,North,Item10StoreA,16/04/2024,8
+Item10,Home & Garden,Lifestyle,StoreB,North,Item10StoreB,04/04/2024,48
+Item10,Home & Garden,Tech,StoreC,North,Item10StoreC,12/04/2024,92
+Item10,Home & Garden,Tech,StoreD,North,Item10StoreD,05/04/2024,58
+Item10,Electronics,Lifestyle,StoreE,North,Item10StoreE,15/04/2024,81
+Item10,Clothing,Lifestyle,StoreF,North,Item10StoreF,11/04/2024,17
+Item10,Home & Garden,Tech,StoreG,North,Item10StoreG,12/04/2024,63
