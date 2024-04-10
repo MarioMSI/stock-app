@@ -17,6 +17,10 @@ end_date = df['date'].max()
 start_date_prev = start_date - pd.DateOffset(weeks = 1)
 end_date_prev = end_date - pd.DateOffset(weeks = 1)
 
+#definimos df_stock
+df_stock = None
+table_stock = None
+
 # Definición de la interfaz de usuario
 my_page = """
 <|toggle|theme|>
@@ -97,7 +101,7 @@ my_page_2 = """
 <|sidebar|
 
 ### Upload your stock
-<|{df_stock}|file_selector|label=Select File|on_action=on_upload|extensions=.csv,.xlsx|drop_message=Drop Message|>
+<|{table_stock}|file_selector|label=Select File|on_action=on_upload|extensions=.csv,.xlsx|drop_message=Drop Message|>
 
 ### Store
 <|{store}|selector|lov={stores}|dropdown|label = Select the Store|on_change=on_filter|>
@@ -116,6 +120,35 @@ my_page_2 = """
 |>
 |>
 
+<main_page|
+# Stock **prediction**{: .color-primary} 📊
+
+<|2 2 1|layout|gap=45px|
+
+<|card|
+### **Total**{: .color-primary} sales 
+Actual week
+<|{int(filtered_df["sales"].sum())}|text|class_name=h3|> 
+|>
+
+<|card|
+### **Total**{: .color-primary} sales 
+Previous week
+<|{int(filtered_df_prev["sales"].sum())}|text|class_name=h3|> 
+
+|>
+|>
+<br/>
+
+<|Sales Table|expandable|not expanded|
+<|{filtered_df}|table|page_size=5|>
+|>
+
+<|Stock Table|expandable|not expanded|
+<|{df_stock}|table|rebuild|page_size=5|>
+|>
+
+|main_page>
 """
 
 pages = {
@@ -163,8 +196,17 @@ def on_download(state):
 
 def on_upload(state):
     print('ok')
+    state.df_stock = pd.read_csv(state.table_stock)
     return state.df_stock
 
+def create_stocks_resume():
+    '''Función para crear una comparativa entre el stock y lo que se necesita,
+    hay que: 
+    tener los elementos de la tabla filtered_df
+    convertir la filtered en una pivot table, en columnas los días filtrados
+    en filas los item
+    mergear las tablas, la que viene nueva en columna stock
+    preparar unos totales'''
 
 # Ejecutar la GUI
 if __name__ == "__main__":
@@ -190,4 +232,5 @@ if __name__ == "__main__":
     }
 
     #Gui(page=my_page).run(title="Inventary App", dev = True, stylekit=stylekit_2)
-    Gui(pages=pages).run(title="Inventary App", dev = True, stylekit=stylekit_2)
+    Gui(pages=pages).run(title="Inventary App", use_reloader=True, stylekit=stylekit_2)
+
