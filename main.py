@@ -97,6 +97,7 @@ my_page_2 = """
 <|navbar|>
 </center>
 
+
 <|25 75|layout|gap=60px|
 <|sidebar|
 
@@ -118,7 +119,7 @@ my_page_2 = """
 <|{None}|file_download|on_action=on_download|label=Download|>
 |download_file>
 |>
-|>
+
 
 <main_page|
 # Stock **prediction**{: .color-primary} 📊
@@ -149,6 +150,7 @@ Previous week
 |>
 
 |main_page>
+|>
 """
 
 pages = {

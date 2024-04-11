@@ -1,3 +1,8 @@
 {
-    "taipyStudio.gUI.elementsFilePaths": []
+    "taipyStudio.gUI.elementsFilePaths": [],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#1C330F",
+        "titleBar.activeBackground": "#274815",
+        "titleBar.activeForeground": "#F8FCF5"
+    }
 }
