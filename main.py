@@ -9,17 +9,24 @@ df = pd.read_csv("./data/forecast.csv")
 df['date'] = pd.to_datetime(df['date'], format='%d/%m/%Y')
 
 # Inicialización de variables
+#variables hoja 1
 stores = df['store'].unique().tolist()
 store = 'StoreA'
 category = categories = df['category'].unique().tolist()
-start_date = df['date'].min() + pd.DateOffset(weeks = 1)
+start_date = df['date'].max() - pd.DateOffset(weeks = 3)
 end_date = df['date'].max()
 start_date_prev = start_date - pd.DateOffset(weeks = 1)
 end_date_prev = end_date - pd.DateOffset(weeks = 1)
 
-#definimos df_stock
+
+#Variables de a hoja 2
 df_stock = None
 table_stock = None
+store_2 = None
+start_date_2 = df['date'].max() - pd.DateOffset(weeks = 3)
+end_date_2 = df['date'].max()
+start_date_prev_2 = start_date_2 - pd.DateOffset(weeks = 1)
+end_date_prev_2 = end_date_2 - pd.DateOffset(weeks = 1)
 
 # Definición de la interfaz de usuario
 my_page = """
@@ -105,14 +112,11 @@ my_page_2 = """
 <|{table_stock}|file_selector|label=Select File|on_action=on_upload|extensions=.csv,.xlsx|drop_message=Drop Message|>
 
 ### Store
-<|{store}|selector|lov={stores}|dropdown|label = Select the Store|on_change=on_filter|>
-
-### Category
-<|{category}|selector|lov={categories}|multiple|label = Select the Category|on_change=on_filter|>
+<|{store_2}|selector|lov={stores}|dropdown|label = Select the Store|on_change=on_filter|>
 
 ### Dates
-<|{start_date}|date|on_change=on_filter|>
-<|{end_date}|date|on_change=on_filter|>
+<|{start_date_2}|date|on_change=on_filter|>
+<|{end_date_2}|date|on_change=on_filter|>
 
 ### Download the prediction
 <download_file|
@@ -158,6 +162,7 @@ pages = {
     'other': my_page_2
 }
 
+#FUNTIONS FOR PAGE 1
 def filter_data(store, category, start_date, end_date):
 
     start_date_prev = start_date - pd.DateOffset(weeks = 1)
@@ -196,6 +201,7 @@ def on_download(state):
     # Usa la función download de Taipy para permitir la descarga del CSV
     download(state, content=bytes(buffer.getvalue(), "UTF-8"), name="filtered_forecast.csv")
 
+#FUNCTIONS FOR PAGE 2
 def on_upload(state):
     print('ok')
     state.df_stock = pd.read_csv(state.table_stock)
