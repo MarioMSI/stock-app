@@ -58,7 +58,7 @@ my_page = """
 |>
 
 <main_page|
-# Stock **prediction**{: .color-primary} 📊
+# Sales **prediction**{: .color-primary} 📈
 
 <|2 2 1|layout|gap=45px|
 
@@ -123,15 +123,15 @@ my_page_2 = """
 ### Calculate
 <|Button Label|button|on_action=on_stocks_resume|>
 
-### Download the prediction
+### Download the order
 <download_file|
-<|{None}|file_download|on_action=on_download|label=Download|>
+<|{None}|file_download|on_action=on_download_order|label=Download|>
 |download_file>
 |>
 
 
 <main_page|
-# Stock **prediction**{: .color-primary} 📊
+# Order **generator**{: .color-primary} 📊
 
 <|2 2 1|layout|gap=45px|
 
@@ -155,8 +155,8 @@ my_page_2 = """
 """
 
 pages = {
-    'ppal' : my_page, 
-    'other': my_page_2
+    'Sales' : my_page, 
+    'Order': my_page_2
 }
 
 #FUNTIONS FOR PAGE 1
@@ -251,6 +251,15 @@ def create_stocks_resume(filtered_df_2, df_stock):
 def on_stocks_resume(state):
     state.pivot_df = create_stocks_resume(state.filtered_df_2, state.df_stock)
 
+def on_download_order(state):
+    # Utiliza StringIO para crear un buffer de texto en memoria para el DataFrame
+    buffer = io.StringIO()
+    state.pivot_df.to_csv(buffer, index=False)
+    buffer.seek(0)  # Vuelve al comienzo del buffer
+    
+    # Usa la función download de Taipy para permitir la descarga del CSV
+    download(state, content=bytes(buffer.getvalue(), "UTF-8"), name="order.csv")
+
 # Ejecutar la GUI
 if __name__ == "__main__":
 
@@ -275,6 +284,15 @@ if __name__ == "__main__":
         'color_paper_dark' : '#414141'
     }
 
+    stylekit_3 = {
+        'color_primary' : '#3189CB',
+        'color_secondary' : '#3CD253',
+        'color_background_light' : '#D8D8D8',
+        'color_background_dark' : '#0F1013',
+        'color_paper_light' : '#E8E8E8',
+        'color_paper_dark' : '#1B1D22'
+    }
+
     #Gui(page=my_page).run(title="Inventary App", dev = True, stylekit=stylekit_2)
-    Gui(pages=pages).run(title="Inventary App", use_reloader=True, stylekit=stylekit_2)
+    Gui(pages=pages).run(title="Inventary App", use_reloader=True, stylekit=stylekit_3)
 
