@@ -3,7 +3,7 @@ import pandas as pd
 import io
 
 # Carga el CSV
-df = pd.read_csv("./data/forecast.csv")
+df = pd.read_parquet("./data/forecast_data.parquet.gzip")
 
 # Convierte la columna de fecha a datetime
 df['date'] = pd.to_datetime(df['date'], format='%d/%m/%Y')
@@ -13,8 +13,10 @@ df_2 = df.copy()
 # Inicialización de variables
 #variables hoja 1
 stores = df['store'].unique().tolist()
-store = 'StoreA'
+store = store_2 = 'NYC_1'
 category = categories = df['category'].unique().tolist()
+regions = df['region'].unique().tolist()
+region = 'NYC'
 start_date = df['date'].max() - pd.DateOffset(weeks = 3)
 end_date = df['date'].max()
 start_date_prev = start_date - pd.DateOffset(weeks = 1)
@@ -24,7 +26,6 @@ end_date_prev = end_date - pd.DateOffset(weeks = 1)
 df_stock = pd.DataFrame()  # DataFrame vacío inicial para evitar errores
 pivot_df = pd.DataFrame()  # DataFrame vacío para pivot_df
 table_stock = None
-store_2 = 'StoreA'
 start_date_2 = df['date'].max() - pd.DateOffset(weeks = 3)
 end_date_2 = df['date'].max()
 start_date_prev_2 = start_date_2 - pd.DateOffset(weeks = 1)
@@ -38,20 +39,23 @@ my_page = """
 <|navbar|>
 </center>
 
-<|25 75|layout|gap=60px|
+<|25 75|layout|gap=40px|
 <|sidebar|
 
-### Store
+#### Region
+<|{region}|selector|lov={regions}|dropdown|label = Select the Store|on_change=on_filter|>
+
+#### Store
 <|{store}|selector|lov={stores}|dropdown|label = Select the Store|on_change=on_filter|>
 
-### Category
+#### Category
 <|{category}|selector|lov={categories}|multiple|label = Select the Category|on_change=on_filter|>
 
-### Dates
+#### Dates
 <|{start_date}|date|on_change=on_filter|>
 <|{end_date}|date|on_change=on_filter|>
 
-### Download the prediction
+#### **Download**{: .color-secondary} the prediction
 <download_file|
 <|{None}|file_download|on_action=on_download|label=Download|>
 |download_file>
@@ -110,20 +114,20 @@ my_page_2 = """
 <|25 75|layout|gap=60px|
 <|sidebar|
 
-### Upload your stock
+#### Upload your stock 
 <|{table_stock}|file_selector|label=Select File|on_action=on_upload|extensions=.csv|drop_message=Drop Message|>
 
-### Store
+#### Store
 <|{store_2}|selector|lov={stores}|dropdown|label = Select the Store|on_change=on_filter_2|>
 
-### Dates
+#### Dates
 <|{start_date_2}|date|on_change=on_filter_2|>
 <|{end_date_2}|date|on_change=on_filter_2|>
 
-### Calculate
-<|Button Label|button|on_action=on_stocks_resume|>
+#### Calculate
+<|OPTAIN ORDER|button|on_action=on_stocks_resume|>
 
-### Download the order
+#### Download the order
 <download_file|
 <|{None}|file_download|on_action=on_download_order|label=Download|>
 |download_file>
@@ -146,12 +150,12 @@ my_page_2 = """
 <|{df_stock}|table|rebuild|page_size=5|>
 |>
 
-<|Resume table|expandable|not expanded|
+<|Resume |expandable|not expanded|
 <|{pivot_df}|table|rebuild|page_size=5|>
 |>
-
+ 
 |main_page>
-|>
+|>  
 """
 
 pages = {
@@ -161,11 +165,12 @@ pages = {
 
 #FUNTIONS FOR PAGE 1
 # -------------------------------------------------------------------------------------------------------
-def filter_data(store, category, start_date, end_date):
+def filter_data(region, store, category, start_date, end_date):
 
     start_date_prev = start_date - pd.DateOffset(weeks = 1)
     end_date_prev = end_date - pd.DateOffset(weeks = 1)
 
+    filtered_df = df[df['region'] == region]
     filtered_df = df[df['store'] == store] 
     filtered_df = filtered_df[filtered_df['category'].isin(category)]
     filtered_df_prev = filtered_df[(filtered_df['date'] >= start_date_prev) & (filtered_df['date'] <= end_date_prev)]
@@ -187,7 +192,7 @@ def filter_data(store, category, start_date, end_date):
 def on_filter(state):
     state.start_date = pd.to_datetime(state.start_date)
     state.end_date = pd.to_datetime(state.end_date)
-    state.filtered_df, state.filtered_df_prev, state.sales_by_day, state.sales_by_item = filter_data(state.store, state.category, state.start_date, state.end_date)
+    state.filtered_df, state.filtered_df_prev, state.sales_by_day, state.sales_by_item = filter_data(state.region, state.store, state.category, state.start_date, state.end_date)
 
 
 def on_download(state):
@@ -204,6 +209,7 @@ def on_download(state):
 def on_upload(state):
     print('ok')
     state.df_stock = pd.read_csv(state.table_stock)
+    state.df_stock = state.df_stock[['item', 'stock']]
     return state.df_stock
 
 def filtered_data_2(store_2, start_date_2, end_date_2):
@@ -245,6 +251,7 @@ def create_stocks_resume(filtered_df_2, df_stock):
     # Merge con df_stock
     pivot_df = pivot_df.merge(df_stock, on='item', how='left')
     pivot_df['Pedido'] =  pivot_df['Total'] - pivot_df['stock'] 
+    pivot_df['Pedido'] = pivot_df['Pedido'].apply(lambda x: 0 if x < 0 else x)
 
     return pivot_df
 
@@ -263,7 +270,7 @@ def on_download_order(state):
 # Ejecutar la GUI
 if __name__ == "__main__":
 
-    filtered_df, filtered_df_prev, sales_by_day, sales_by_item = filter_data(store, category, start_date, end_date)
+    filtered_df, filtered_df_prev, sales_by_day, sales_by_item = filter_data(region, store, category, start_date, end_date)
     filtered_df_2 = filtered_data_2(store_2, start_date_2, end_date_2)
 
     stylekit_1 = {
